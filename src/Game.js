@@ -76,7 +76,9 @@ function playCard(G, ctx, cardIndex, chosenPlayer){
         G.players[chosenPlayer].reports = G.players[chosenPlayer].reports + 1;
     }
     if (G.players[currentPlayer].hand[cardIndex].use === 6) {
-        G.players[chosenPlayer].reports = G.players[chosenPlayer].reports - 2;
+        if (G.players[chosenPlayer].reports > 0) {
+            G.players[chosenPlayer].reports = G.players[chosenPlayer].reports - 2;
+        }
     }
     if (G.players[ctx.currentPlayer].hand[cardIndex].use === 7) {
         for (let i = 0; i < G.players.lenght; i++) {
@@ -98,14 +100,14 @@ function playCard(G, ctx, cardIndex, chosenPlayer){
             }
         }
     }
-    if (G.players[currentPlayer].hand[cardIndex].use === 11) {
+    if (G.players[currentPlayer].hand[cardIndex].use === 13) {
         G.players[ctx.currentPlayer].likes = G.players[ctx.currentPlayer].likes + 2;
     }
-    if (G.players[currentPlayer].hand[cardIndex].use === 12) {
+    if (G.players[currentPlayer].hand[cardIndex].use === 11) {
         G.players[chosenPlayer].likes = G.players[chosenPlayer].likes + 4;
         G.players[chosenPlayer].reports = G.players[chosenPlayer].reports + 1;
     }
-    if (G.players[ctx.currentPlayer].hand[cardIndex].use === 13) {
+    if (G.players[ctx.currentPlayer].hand[cardIndex].use === 12) {
         for (let i = 0; i < G.players.lenght; i++) {
            G.players[i].likes = G.players[i].likes + 1;          
         }

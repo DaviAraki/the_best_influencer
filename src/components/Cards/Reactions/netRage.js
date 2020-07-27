@@ -6,7 +6,8 @@ export default class netRage extends basicReaction {
             name: "Net Rage",
             green:{reports:0,Likes:1},
             yellow: { reports: 0, Likes:1 },
-            red: { reports: 0, Likes:1 }
+            red: { reports: 0, Likes:1 },
+            use:1
         })
     }
 
