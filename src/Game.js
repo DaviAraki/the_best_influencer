@@ -137,8 +137,11 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
     }
     if (G.players[ctx.currentPlayer].hand[cardIndex].use === 7) {
         for (let i = 0; i < G.players.length; i++) {
-            if (G.players[i].reports > 1) {
-                G.players[i].reports = G.players[i].reports - 2;
+            if (G.players[i].reports > 0) {
+                G.players[i].reports = G.players[i].reports - 1;
+            }
+            if (G.players[i].reports > 0) {
+                G.players[i].reports = G.players[i].reports - 1;
             }
         }
     }
