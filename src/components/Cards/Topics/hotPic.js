@@ -11,7 +11,7 @@ export default class hotPic extends basicTopic {
 
     static create(qty) {
         let cards = [];
-        for (let i = 0; 1 < qty; i++) {
+        for (let i = 0; i < qty; i++) {
             cards.push(new hotPic());
         }
         return cards;

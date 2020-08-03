@@ -10,7 +10,7 @@ export default class movieCriticTopic extends basicTopic {
 
     static create(qty) {
         let cards = [];
-        for (let i = 0; 1 < qty; i++) {
+        for (let i = 0; i < qty; i++) {
             cards.push(new movieCriticTopic());
         }
         return cards;
