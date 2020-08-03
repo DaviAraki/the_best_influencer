@@ -146,7 +146,9 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
         }
     }
     if (G.players[ctx.currentPlayer].hand[cardIndex].use === 8) {
-        G.players[chosenPlayer].reports = G.players[chosenPlayer].reports + 2;
+        for (let i = 0; i < G.players.length; i++) {
+            G.players[i].reports = G.players[i].reports + 2;
+        }
     }
     if (G.players[ctx.currentPlayer].hand[cardIndex].use === 9) {
         G.players[ctx.currentPlayer].likes = G.players[ctx.currentPlayer].likes + 3;
