@@ -107,7 +107,7 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
         }
     }
     if (G.players[ctx.currentPlayer].hand[cardIndex].use === 2) {
-        G.players[ctx.chosenPlayer].reports = G.players[chosenPlayer].reports + G.offer.deck[0].red.reports;
+        G.players[chosenPlayer].reports = G.players[chosenPlayer].reports + G.offer.deck[0].red.reports;
         G.players[chosenPlayer].likes = G.players[chosenPlayer].likes + G.offer.deck[0].red.likes;
         G.players[chosenPlayer].board.red.push(
             G.offer.deck.shift()
