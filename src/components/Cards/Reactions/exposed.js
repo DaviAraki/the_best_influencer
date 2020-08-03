@@ -4,9 +4,9 @@ export default class exposed extends basicReaction {
     constructor() {
         super({
             name: "Exposed",
-            green: { reports: 0, Likes: 0 },
-            yellow: { reports: 1, Likes: 0 },
-            red: { reports: 1, Likes: 0 },
+            green: { reports: 0, likes: 0 },
+            yellow: { reports: 1, likes: 0 },
+            red: { reports: 1, likes: 0 },
             use: 5
         })
     }

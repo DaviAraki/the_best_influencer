@@ -4,9 +4,9 @@ export default class netRage extends basicReaction {
     constructor() {
         super({
             name: "Net Rage",
-            green:{reports:0,Likes:1},
-            yellow: { reports: 0, Likes:1 },
-            red: { reports: 0, Likes:1 },
+            green:{reports:0,likes:1},
+            yellow: { reports: 0, likes:1 },
+            red: { reports: 0, likes:1 },
             use:1
         })
     }

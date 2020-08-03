@@ -4,9 +4,9 @@ export default class redemption extends basicReaction {
     constructor() {
         super({
             name: "Redemption",
-            green: { reports: 0, Likes: 0 },
-            yellow: { reports: 2, Likes: 0 },
-            red: { reports: 2, Likes: 0 },
+            green: { reports: 0, likes: 0 },
+            yellow: { reports: 2, likes: 0 },
+            red: { reports: 2, likes: 0 },
             use: 6
         })
     }

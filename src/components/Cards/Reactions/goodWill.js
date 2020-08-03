@@ -4,9 +4,9 @@ export default class goodWill extends basicReaction {
     constructor() {
         super({
             name: "Good Will",
-            green: { reports: 0, Likes: 1 },
-            yellow: { reports: 0, Likes: 3 },
-            red: { reports: 0, Likes: 3 },
+            green: { reports: 0, likes: 1 },
+            yellow: { reports: 0, likes: 3 },
+            red: { reports: 0, likes: 3 },
             use: 9
         })
     }
