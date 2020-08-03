@@ -62,7 +62,8 @@ export const iTreta = {
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
             deck: [].concat(bigExplanation.create(2), boldClaim.create(2), exposed.create(2), goodWill.create(2), lowComent.create(2), netForgives.create(2), netRage.create(2), pushLimits.create(2), redemption.create(2), socialNetwork.create(2), webForgives.create(2), webRage.create(2)),
-            discardPile: []
+            discardPile: [],
+            discartedTopics:[]
         },
     }),
     endIf: (G, ctx) => {
@@ -196,6 +197,10 @@ function chooseTopic(G, ctx, topicIndex) {
             G.offer.deck.shift()
         );
     }
+    G.offer.discartedTopics.push(
+        G.offer.topics[topicIndex]
+    )
+    G.offer.topics.splice(topicIndex,1);
 }
 function draw(G, ctx) {
     if (G.offer.deck.length === 0) {
