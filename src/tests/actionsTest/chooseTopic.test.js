@@ -23,7 +23,7 @@ it("I choose a topic, check the challenge of the topic, move cards from deck to 
             },
         ],
         offer: {
-            topics:[t],
+            topicsOffer:[t],
             deck: [c,f],
             discardPile: [],
             discartedTopics:[]

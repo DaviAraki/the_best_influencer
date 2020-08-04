@@ -25,6 +25,7 @@ import topic3 from "./components/Cards/Topics/topic3"
 import topic4 from "./components/Cards/Topics/topic4"
 import topic5 from "./components/Cards/Topics/topic5"
 import generateUniqueId from "./utils/generateUniqueId"
+import { Stage } from 'boardgame.io/core'
 
 export const iTreta = {
     name: "iTreta",
@@ -61,17 +62,18 @@ export const iTreta = {
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
-            deck: [].concat(bigExplanation.create(2), boldClaim.create(2), exposed.create(2), goodWill.create(2), lowComent.create(2), netForgives.create(2), netRage.create(2), pushLimits.create(2), redemption.create(2), socialNetwork.create(2), webForgives.create(2), webRage.create(2)),
+            deck: [].concat(bigExplanation.create(3), boldClaim.create(3), exposed.create(3), goodWill.create(3), lowComent.create(3), netForgives.create(3), netRage.create(3), pushLimits.create(3), redemption.create(3), socialNetwork.create(3), webForgives.create(3), webRage.create(3)),
+            topicsOffer:[],
             discardPile: [],
             discartedTopics:[]
         },
+        
     }),
     endIf: (G, ctx) => {
         if (G.players[ctx.currentPlayer].likes > 15) {
             return { winner: G.players[ctx.currentPlayer] }
         }
     },
-
     phases: {
         setupPhase: {
             start: true,
@@ -90,13 +92,25 @@ export const iTreta = {
             }
         },
         playPhase: {
-            moves: { playCard, pass, chooseTopic }
+            onBegin:(G,ctx)=>{
+                dealTopics(G,ctx)     
+            },
+            turn: {
+                activePlayers: {
+                    currentPlayer: 'topicSelection',
+                },
+                stages: {
+                    topicSelection: {
+                        next: 'playStage',
+                        moves: { chooseTopic },
+                    },
+                    playStage: {
+                        moves: { playCard, pass },
+                        next: 'topicSelection'
+                    }
+                }
+            }, 
         }
-    },
-    moves: {
-        playCard,
-        pass,
-        chooseTopic,
     },
 
 };
@@ -179,21 +193,21 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
     G.players[ctx.currentPlayer].hand.splice(cardIndex, 1)
 }
 function chooseTopic(G, ctx, topicIndex) {
-    for (let i = 0; i < G.offer.topics[topicIndex].red; i++) {
+    for (let i = 0; i < G.offer.topicsOffer[topicIndex].red; i++) {
         G.players[ctx.currentPlayer].reports = G.players[ctx.currentPlayer].reports + G.offer.deck[0].red.reports;
         G.players[ctx.currentPlayer].likes = G.players[ctx.currentPlayer].likes + G.offer.deck[0].red.likes;
         G.players[ctx.currentPlayer].board.red.push(
             G.offer.deck.shift()
         );
     };
-    for (let i = 0; i < G.offer.topics[topicIndex].yellow; i++) {
+    for (let i = 0; i < G.offer.topicsOffer[topicIndex].yellow; i++) {
         G.players[ctx.currentPlayer].reports = G.players[ctx.currentPlayer].reports + G.offer.deck[0].yellow.reports;
         G.players[ctx.currentPlayer].likes = G.players[ctx.currentPlayer].likes + G.offer.deck[0].yellow.likes
         G.players[ctx.currentPlayer].board.yellow.push(
             G.offer.deck.shift()
         );
     };
-    for (let i = 0; i < G.offer.topics[topicIndex].green; i++) {
+    for (let i = 0; i < G.offer.topicsOffer[topicIndex].green; i++) {
         G.players[ctx.currentPlayer].reports = G.players[ctx.currentPlayer].reports + G.offer.deck[0].green.reports;
         G.players[ctx.currentPlayer].likes = G.players[ctx.currentPlayer].likes + G.offer.deck[0].green.likes
         G.players[ctx.currentPlayer].board.green.push(
@@ -201,9 +215,10 @@ function chooseTopic(G, ctx, topicIndex) {
         );
     }
     G.offer.discartedTopics.push(
-        G.offer.topics[topicIndex]
+        G.offer.topicsOffer[topicIndex]
     )
-    G.offer.topics.splice(topicIndex,1);
+    G.offer.topicsOffer.splice(topicIndex,1);
+    ctx.events.endStage();
 }
 function draw(G, ctx) {
     if (G.offer.deck.length === 0) {
@@ -224,8 +239,24 @@ function shuffleTopic(G, ctx) {
     G.offer.topics.sort(() => Math.random() - 0.5);
 }
 function pass(G, ctx) {
+    endPlayerTurn(G, ctx)
     ctx.events.endTurn()
 }
+function endPlayerTurn(G, ctx) {
+    for (let i; i < G.players.length; i++) {
+        if (G.players[i].reports > 6) {
+            G.players.splice(i, 1)
+        }
+    }
+}
+function dealTopics(G, ctx){
+    while(G.offer.topicsOffer.length<5){
+        G.offer.topicsOffer.push(
+            G.offer.topics.shift()
+        )
+    }
+}
+
 
 export {
     draw,
@@ -234,4 +265,5 @@ export {
     playCard,
     chooseTopic,
     pass,
+    endPlayerTurn,
 }
