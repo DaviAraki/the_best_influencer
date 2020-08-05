@@ -12,6 +12,12 @@ it("I choose a topic, check the challenge of the topic, move cards from deck to 
     const f = new bigExplanation();
     const c = new goodWill()
     const t = new topic1()
+    let ctx = { currentPlayer: "0", events: {}, activePlayers: { "1": "topicSelection" } }
+    let endStage = jest.fn(() => {
+        ctx.activePlayers = { "1": "playPhase" }
+    })
+    ctx.events.endStage = endStage
+
     const G = {
         players: [
             {
@@ -29,7 +35,7 @@ it("I choose a topic, check the challenge of the topic, move cards from deck to 
             discartedTopics:[]
         }
     };
-    chooseTopic(G, { currentPlayer: "0" }, 0);
+    chooseTopic(G, ctx, 0);
     expect(G.players[0].likes).toEqual(3);
     expect(G.players[0].reports).toEqual(1);
     expect(G.players[0].board.yellow.length).toEqual(2);

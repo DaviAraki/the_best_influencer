@@ -13,6 +13,12 @@ it("I choose a topic, check the challenge of the topic, move cards from deck to 
     const c = new goodWill()
     const t = new boldMemeTopic()
     const c2 = new exposed()
+    let ctx = { currentPlayer: "0", events: {}, activePlayers: { "1": "topicSelection" } }
+    let endStage = jest.fn(() => {
+        ctx.activePlayers = { "1": "playPhase" }
+    })
+    ctx.events.endStage = endStage
+
     const G = {
         players: [
             {
@@ -24,13 +30,13 @@ it("I choose a topic, check the challenge of the topic, move cards from deck to 
             },
         ],
         offer: {
-            topics: [t],
+            topicsOffer: [t],
             deck: [c, f, c2],
             discardPile: [],
             discartedTopics: []
         }
     };
-    chooseTopic(G, { currentPlayer: "0" }, 0);
+    chooseTopic(G, ctx, 0);
     expect(G.players[0].likes).toEqual(3);
     expect(G.players[0].reports).toEqual(2);
     expect(G.players[0].board.yellow.length).toEqual(2);

@@ -269,4 +269,5 @@ export {
     chooseTopic,
     pass,
     endPlayerTurn,
+    dealTopics,
 }
