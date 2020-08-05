@@ -65,7 +65,7 @@ const iTreta = ProcessGameConfig({
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
-            deck: [].concat(bigExplanation.create(2), boldClaim.create(2), exposed.create(2), goodWill.create(2), lowComent.create(2), netForgives.create(2), netRage.create(2), pushLimits.create(2), redemption.create(2), socialNetwork.create(2), webForgives.create(2), webRage.create(2)),
+            deck: [].concat(bigExplanation.create(3), boldClaim.create(3), exposed.create(3), goodWill.create(3), lowComent.create(3), netForgives.create(3), netRage.create(3), pushLimits.create(3), redemption.create(3), socialNetwork.create(3), webForgives.create(3), webRage.create(3)),
             discardPile: [],
             discartedTopics: []
         },
@@ -73,6 +73,9 @@ const iTreta = ProcessGameConfig({
     endIf: (G, ctx) => {
         if (G.players[ctx.currentPlayer].likes > 15) {
             return { winner: G.players[ctx.currentPlayer] }
+        }
+        if(G.players.length === 1){
+            return {winner: G.players[0]}
         }
     },
 

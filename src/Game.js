@@ -73,6 +73,9 @@ export const iTreta = {
         if (G.players[ctx.currentPlayer].likes > 15) {
             return { winner: G.players[ctx.currentPlayer] }
         }
+        if(G.players.length===1){
+            return{ winner: G.players[0]}
+        }
     },
     phases: {
         setupPhase: {
