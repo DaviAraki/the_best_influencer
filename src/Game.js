@@ -70,7 +70,7 @@ export const iTreta = {
         
     }),
     endIf: (G, ctx) => {
-        if (G.players[ctx.currentPlayer].likes > 15) {
+        if (G.players[ctx.currentPlayer].likes > 14) {
             return { winner: G.players[ctx.currentPlayer] }
         }
         if(G.players.length===1){
@@ -242,17 +242,17 @@ function shuffleTopic(G, ctx) {
     G.offer.topics.sort(() => Math.random() - 0.5);
 }
 function pass(G, ctx) {
-    endPlayerTurn(G, ctx)
+    //endPlayerTurn(G, ctx)
     ctx.events.endTurn()
 }
-function endPlayerTurn(G, ctx) {
-    for (let i; i < G.players.length; i++) {
-        if (G.players[i].reports > 6) {
-            G.players.splice(i, 1)
-            ctx.numPlayers = ctx.numPlayers - 1
-        }
-    }
-}
+// function endPlayerTurn(G, ctx) {
+//     for (let i; i < G.players.length; i++) {
+//         if (G.players[i].reports > 6) {
+//             G.players.splice(i, 1)
+//             ctx.numPlayers = ctx.numPlayers - 1
+//         }
+//     }
+// }
 function dealTopics(G, ctx){
     while(G.offer.topicsOffer.length<5){
         G.offer.topicsOffer.push(
@@ -269,6 +269,6 @@ export {
     playCard,
     chooseTopic,
     pass,
-    endPlayerTurn,
+    //endPlayerTurn,
     dealTopics,
 }

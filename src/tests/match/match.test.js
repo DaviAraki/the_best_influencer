@@ -25,7 +25,7 @@ import topic3 from "../../components/Cards/Topics/topic3"
 import topic4 from "../../components/Cards/Topics/topic4"
 import topic5 from "../../components/Cards/Topics/topic5"
 import generateUniqueId from "../../utils/generateUniqueId"
-import { Simulate } from 'boardgame.io/ai'
+import { Step, Simulate } from 'boardgame.io/ai'
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal'
 import { RandomBot, MCTSBot } from 'boardgame.io/ai';
 import { InitializeGame, CreateGameReducer } from 'boardgame.io/dist/cjs/internal';
@@ -73,10 +73,10 @@ const iTreta = ProcessGameConfig({
         },
     }),
     endIf: (G, ctx) => {
-        if (G.players[ctx.currentPlayer].likes > 15) {
+        if (G.players[ctx.currentPlayer].likes > 14) {
             return { winner: G.players[ctx.currentPlayer] }
         }
-        if(G.players.length < 2){
+        if(G.players.length === 1){
             return {winner: G.players[0]}
         }
     },
@@ -153,16 +153,16 @@ const safePlayer= (G,ctx) => {
         }
     }
     if(ctx.activePlayers[ctx.currentPlayer]==="playStage"){
-        for(let i=0; i<G.players[ctx.currentPlayer].hand.length; i++){
-            moves.push({move:'playCard', args:([i,0])});
-        }
-        moves.push({move:'pass', args:null})
+        moves.push({ move: 'pass', args: null })
+        // for(let i=0; i<G.players[ctx.currentPlayer].hand.length; i++){
+        //     moves.push({move:'playCard', args:([i,0])});
+        // }
+        
     }
     return moves;
 }
 const balancedPlayer = (G, ctx) => {
     let moves = [{}];
-
     if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
         let balancedChoice = { red: 0, yellow: 0, green: 0, index: 0 }
         for (let i = 0; i < G.offer.topicsOffer.length; i++) {
@@ -191,10 +191,10 @@ const balancedPlayer = (G, ctx) => {
         }
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
-        }
         moves.push({ move: 'pass', args: null })
+        // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+        //     moves.push({ move: 'playCard', args: ([i,0]) });
+        // }        
     }
     return moves;
 }
@@ -229,10 +229,10 @@ const boldPlayer = (G, ctx) => {
         }
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
-        }
         moves.push({ move: 'pass', args: null })
+        // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+        //     moves.push({ move: 'playCard', args: ([i,0]) });
+        // }        
     }
     return moves;
 }
@@ -245,20 +245,23 @@ const enumerate = (G, ctx) => {
         }
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
-        }
         moves.push({ move: 'pass', args: null })
+        // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+        //     moves.push({ move: 'playCard', args: ([i,0]) });
+        // }
     }
     return moves;
 }
 const bots = {
-    '0' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:safePlayer}),
-    '1' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:balancedPlayer}),
-    '2' : new RandomBot({ 'seed': 'test', game: iTreta,enumerate:boldPlayer}),
-    '3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 200 }),
+    '0': new RandomBot({ 'seed': 'test', game: iTreta, enumerate: safePlayer, playerID: '0', iterations: 200 }),
+    '1': new RandomBot({ 'seed': 'test', game: iTreta, enumerate: balancedPlayer, playerID: '1', iterations: 200 }),
+    '2': new RandomBot({ 'seed': 'test', game: iTreta, enumerate: boldPlayer, playerID: '2', iterations: 200 }),
+    '3': new RandomBot({ 'seed': 'test', game: iTreta, enumerate: boldPlayer, playerID: '3', iterations: 200 }),
 }
-it('should run', async () => {
+
+it('should run', async () => { 
+
+
 
     expect(typeof Simulate).toBe('function');
     const state = InitializeGame({ game: iTreta, numPlayers: 4 });
