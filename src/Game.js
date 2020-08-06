@@ -35,28 +35,32 @@ export const iTreta = {
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
                 id: "player2",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
                 id: "player3",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
                 id: "player4",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             }
         ],
         offer: {
@@ -64,18 +68,21 @@ export const iTreta = {
             deck: [].concat(bigExplanation.create(10), boldClaim.create(10), exposed.create(10), goodWill.create(10), lowComent.create(10), netForgives.create(10), netRage.create(10), pushLimits.create(10), redemption.create(10), socialNetwork.create(10), webForgives.create(10), webRage.create(10)),
             topicsOffer:[],
             discardPile: [],
-            discartedTopics:[]
+            discartedTopics:[],
+            activePlayers:[0,1,2,3]
         },
         
     }),
     endIf: (G, ctx) => {
-        if (G.players[ctx.currentPlayer].likes > 15) {
-
+        if ((G.players[ctx.currentPlayer].likes > 15)&(!G.players[ctx.currentPlayer].eliminated)) {
             ctx.events.endPhase()
             return { winner: ctx.currentPlayer }
         }
-        if(G.players.length===1){
-            return{ winner: G.players[0].id}
+        if(G.offer.activePlayers.length<2){
+            if(G.offer.activePlayers.length===1){
+                return{ winner: G.offer.activePlayers[0]}
+            }
+            else return{draw : true}
         }
     },
     phases: {
@@ -106,7 +113,7 @@ export const iTreta = {
                 stages: {
                     topicSelection: {
                         next: 'playStage',
-                        moves: { chooseTopic },
+                        moves: { chooseTopic,skip },
                     },
                     playStage: {
                         moves: { playCard, pass },
@@ -124,16 +131,21 @@ export const iTreta = {
         enumerate : (G, ctx) => {
             let moves = [];
 
-            if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
-                for (let i = 0; i < G.offer.topicsOffer.length; i++) {
-                    moves.push({ move: 'chooseTopic', args: [i] })
+            if ((ctx.activePlayers !== null) && (ctx.phase !== null)) {
+                if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection" && G.players[ctx.currentPlayer].eliminated === false) {
+                    for (let i = 0; i < G.offer.topicsOffer.length; i++) {
+                        moves.push({ move: 'chooseTopic', args: [i] })
+                    }
                 }
-            }
-            if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-                for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-                    moves.push({ move: 'playCard', args: ([i, 0]) });
+                if (ctx.activePlayers[ctx.currentPlayer] === "playStage" && G.players[ctx.currentPlayer].eliminated === false) {
+                    for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+                        moves.push({ move: 'playCard', args: ([i, 0]) });
+                    }
+                    moves.push({ move: 'pass', args: null })
                 }
-                moves.push({ move: 'pass', args: null })
+                if (G.players[ctx.currentPlayer].eliminated === true) {
+                    moves.push({ move: 'skip', args: null })
+                }
             }
             return moves;
             
@@ -273,11 +285,20 @@ function pass(G, ctx) {
     endPlayerTurn(G, ctx)
     ctx.events.endTurn()
 }
+function skip(G,ctx){
+    ctx.events.endTurn()
+}
 function endPlayerTurn(G, ctx) {
-    for (let i; i < G.players.length; i++) {
-        if (G.players[i].reports > 6) {
-            G.players.splice(i, 1)
-            ctx.numPlayers = ctx.numPlayers - 1
+    console.log("here")
+    for (let i=0 ; i < G.players.length; i++) {
+        if (G.players[i].reports > 4) {
+            console.log(G.players[i].reports)
+            G.players[i].eliminated = true
+            for(let o=0; o<G.offer.activePlayers.length; o++){
+                if(G.offer.activePlayers[o]===i){
+                    G.offer.activePlayers.splice(o,1)
+                }
+            }
         }
     }
 }

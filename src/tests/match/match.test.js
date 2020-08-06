@@ -30,35 +30,34 @@ import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal'
 import { RandomBot, MCTSBot } from 'boardgame.io/ai';
 import { InitializeGame, CreateGameReducer } from 'boardgame.io/dist/cjs/internal';
 import {playCard, pass, draw, shuffleDeck, shuffleTopic,chooseTopic,dealTopics, endPlayerTurn} from "../../Game"
-import { Async } from "boardgame.io/dist/cjs/base-bdd9c13b"
 const fs = require('fs');
 
 const iTreta = ProcessGameConfig({
     setup: () => ({
         players: [
             {
-                id: generateUniqueId(),
+                id: "safePlayer"(),
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "balancedPlayer"(),
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "boldPlayer"(),
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "MCTS"(),
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
@@ -67,7 +66,7 @@ const iTreta = ProcessGameConfig({
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
-            deck: [].concat(bigExplanation.create(5), boldClaim.create(5), exposed.create(5), goodWill.create(5), lowComent.create(5), netForgives.create(5), netRage.create(5), pushLimits.create(5), redemption.create(5), socialNetwork.create(5), webForgives.create(5), webRage.create(5)),
+            deck: [].concat(bigExplanation.create(10), boldClaim.create(10), exposed.create(10), goodWill.create(10), lowComent.create(10), netForgives.create(10), netRage.create(10), pushLimits.create(10), redemption.create(10), socialNetwork.create(10), webForgives.create(10), webRage.create(10)),
             discardPile: [],
             discartedTopics: [],
             topicsOffer: [],
@@ -75,13 +74,14 @@ const iTreta = ProcessGameConfig({
     }),
     endIf: (G, ctx) => {
         if (G.players[ctx.currentPlayer].likes > 15) {
-            return { winner: G.players[ctx.currentPlayer] }
+            ctx.events.endPhase()
+            return { winner: ctx.currentPlayer }
         }
-        if(G.players.length < 2){
-            return {winner: G.players[0]}
+        if (G.players.length === 1) {
+            ctx.events.endPhase()
+            return { winner: G.players[0].id }
         }
     },
-
     phases: {
         setupPhase: {
             start: true,
@@ -130,131 +130,136 @@ const iTreta = ProcessGameConfig({
 
 const safePlayer= (G,ctx) => {
     let moves =[];
-
-    if(ctx.activePlayers[ctx.currentPlayer]==="topicSelection"){ 
-        let safeChoice = {red:0, yellow:0, green:0, index:0}
-        for(let i=0; i<G.offer.topicsOffer.length ; i++){
-            if(G.offer.topicsOffer[i].green>safeChoice.green){
-                safeChoice.green = G.offer.topicsOffer[i].green
-                safeChoice.yellow = G.offer.topicsOffer[i].yellow
-                safeChoice.red = G.offer.topicsOffer[i].red
-                safeChoice.index = i
-            }
-            else if (G.offer.topicsOffer[i].green === safeChoice.green){
-                if (G.offer.topicsOffer[i].yellow < safeChoice.yellow){
+    if (ctx.phase !== null) {
+        if(ctx.activePlayers[ctx.currentPlayer]==="topicSelection"){ 
+            let safeChoice = {red:0, yellow:0, green:0, index:0}
+            for(let i=0; i<G.offer.topicsOffer.length ; i++){
+                if(G.offer.topicsOffer[i].green>safeChoice.green){
                     safeChoice.green = G.offer.topicsOffer[i].green
                     safeChoice.yellow = G.offer.topicsOffer[i].yellow
                     safeChoice.red = G.offer.topicsOffer[i].red
                     safeChoice.index = i
-                } else if (G.offer.topicsOffer[i].yellow === safeChoice.yellow){
-                    if (G.offer.topicsOffer[i].red < safeChoice.red) {
+                }
+                else if (G.offer.topicsOffer[i].green === safeChoice.green){
+                    if (G.offer.topicsOffer[i].yellow < safeChoice.yellow){
                         safeChoice.green = G.offer.topicsOffer[i].green
                         safeChoice.yellow = G.offer.topicsOffer[i].yellow
                         safeChoice.red = G.offer.topicsOffer[i].red
                         safeChoice.index = i
+                    } else if (G.offer.topicsOffer[i].yellow === safeChoice.yellow){
+                        if (G.offer.topicsOffer[i].red < safeChoice.red) {
+                            safeChoice.green = G.offer.topicsOffer[i].green
+                            safeChoice.yellow = G.offer.topicsOffer[i].yellow
+                            safeChoice.red = G.offer.topicsOffer[i].red
+                            safeChoice.index = i
+                        }
                     }
                 }
+            moves.push({move:'chooseTopic', args:[safeChoice.index]})    
             }
-        moves.push({move:'chooseTopic', args:[safeChoice.index]})    
         }
-    }
-    if(ctx.activePlayers[ctx.currentPlayer]==="playStage"){
-        for(let i=0; i<G.players[ctx.currentPlayer].hand.length; i++){
-            moves.push({move:'playCard', args:([i,0])});
+        if(ctx.activePlayers[ctx.currentPlayer]==="playStage"){
+            // for(let i=0; i<G.players[ctx.currentPlayer].hand.length; i++){
+            //     moves.push({move:'playCard', args:([i,0])});
+            // }
+            moves.push({move:'pass', args:null})
         }
-        moves.push({move:'pass', args:null})
     }
     return moves;
 }
 const balancedPlayer = (G, ctx) => {
     let moves = [];
-
-    if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
-        let balancedChoice = { red: 0, yellow: 0, green: 0, index: 0 }
-        for (let i = 0; i < G.offer.topicsOffer.length; i++) {
-            if (G.offer.topicsOffer[i].yellow > balancedChoice.yellow) {
-                balancedChoice.green = G.offer.topicsOffer[i].green
-                balancedChoice.yellow = G.offer.topicsOffer[i].yellow
-                balancedChoice.red = G.offer.topicsOffer[i].red
-                balancedChoice.index = i
-            }
-            else if (G.offer.topicsOffer[i].yellow === balancedChoice.yellow) {
-                if (G.offer.topicsOffer[i].green > balancedChoice.green) {
+    if (ctx.phase !== null) {
+        if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
+            let balancedChoice = { red: 0, yellow: 0, green: 0, index: 0 }
+            for (let i = 0; i < G.offer.topicsOffer.length; i++) {
+                if (G.offer.topicsOffer[i].yellow > balancedChoice.yellow) {
                     balancedChoice.green = G.offer.topicsOffer[i].green
                     balancedChoice.yellow = G.offer.topicsOffer[i].yellow
                     balancedChoice.red = G.offer.topicsOffer[i].red
                     balancedChoice.index = i
-                } else if (G.offer.topicsOffer[i].green === balancedChoice.green) {
-                    if (G.offer.topicsOffer[i].red < balancedChoice.red) {
+                }
+                else if (G.offer.topicsOffer[i].yellow === balancedChoice.yellow) {
+                    if (G.offer.topicsOffer[i].green > balancedChoice.green) {
                         balancedChoice.green = G.offer.topicsOffer[i].green
                         balancedChoice.yellow = G.offer.topicsOffer[i].yellow
                         balancedChoice.red = G.offer.topicsOffer[i].red
                         balancedChoice.index = i
+                    } else if (G.offer.topicsOffer[i].green === balancedChoice.green) {
+                        if (G.offer.topicsOffer[i].red < balancedChoice.red) {
+                            balancedChoice.green = G.offer.topicsOffer[i].green
+                            balancedChoice.yellow = G.offer.topicsOffer[i].yellow
+                            balancedChoice.red = G.offer.topicsOffer[i].red
+                            balancedChoice.index = i
+                        }
                     }
                 }
+                moves.push({ move: 'chooseTopic', args: [balancedChoice.index] })
             }
-            moves.push({ move: 'chooseTopic', args: [balancedChoice.index] })
         }
-    }
-    if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
+        if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
+            // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+            //     moves.push({ move: 'playCard', args: ([i,0]) });
+            // }
+            moves.push({ move: 'pass', args: null })
         }
-        moves.push({ move: 'pass', args: null })
     }
     return moves;
 }
 const boldPlayer = (G, ctx) => {
     let moves = [];
 
-    if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
-        let boldChoice = { red: 0, yellow: 0, green: 0, index: 0 }
-        for (let i = 0; i < G.offer.topicsOffer.length; i++) {
-            if (G.offer.topicsOffer[i].red > boldChoice.red) {
-                boldChoice.green = G.offer.topicsOffer[i].green
-                boldChoice.yellow = G.offer.topicsOffer[i].yellow
-                boldChoice.red = G.offer.topicsOffer[i].red
-                boldChoice.index = i
-            }
-            else if (G.offer.topicsOffer[i].red === boldChoice.red) {
-                if (G.offer.topicsOffer[i].yellow > boldChoice.yellow) {
+    if(ctx.phase !== null){
+        if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
+            let boldChoice = { red: 0, yellow: 0, green: 0, index: 0 }
+            for (let i = 0; i < G.offer.topicsOffer.length; i++) {
+                if (G.offer.topicsOffer[i].red > boldChoice.red) {
                     boldChoice.green = G.offer.topicsOffer[i].green
                     boldChoice.yellow = G.offer.topicsOffer[i].yellow
                     boldChoice.red = G.offer.topicsOffer[i].red
                     boldChoice.index = i
-                } else if (G.offer.topicsOffer[i].yellow === boldChoice.yellow) {
-                    if (G.offer.topicsOffer[i].green > boldChoice.green) {
+                }
+                else if (G.offer.topicsOffer[i].red === boldChoice.red) {
+                    if (G.offer.topicsOffer[i].yellow > boldChoice.yellow) {
                         boldChoice.green = G.offer.topicsOffer[i].green
                         boldChoice.yellow = G.offer.topicsOffer[i].yellow
                         boldChoice.red = G.offer.topicsOffer[i].red
                         boldChoice.index = i
+                    } else if (G.offer.topicsOffer[i].yellow === boldChoice.yellow) {
+                        if (G.offer.topicsOffer[i].green > boldChoice.green) {
+                            boldChoice.green = G.offer.topicsOffer[i].green
+                            boldChoice.yellow = G.offer.topicsOffer[i].yellow
+                            boldChoice.red = G.offer.topicsOffer[i].red
+                            boldChoice.index = i
+                        }
                     }
                 }
+                moves.push({ move: 'chooseTopic', args: [boldChoice.index] })
             }
-            moves.push({ move: 'chooseTopic', args: [boldChoice.index] })
         }
-    }
-    if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
+        if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
+            // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+            //     moves.push({ move: 'playCard', args: ([i,0]) });
+            // }
+            moves.push({ move: 'pass', args: null })
         }
-        moves.push({ move: 'pass', args: null })
     }
     return moves;
 }
 const enumerate = (G, ctx) => {
     let moves = [];
-
-    if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
-        for (let i = 0; i < G.offer.topicsOffer.length; i++) {
-           moves.push({ move: 'chooseTopic', args: [i] })
+    if (ctx.phase !== null) {
+        if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
+            for (let i = 0; i < G.offer.topicsOffer.length; i++) {
+            moves.push({ move: 'chooseTopic', args: [i] })
+            }
         }
-    }
-    if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
-        for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: ([i,0]) });
+        if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
+            // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+            //     moves.push({ move: 'playCard', args: ([i,0]) });
+            // }
+            moves.push({ move: 'pass', args: null })
         }
-        moves.push({ move: 'pass', args: null })
     }
     return moves;
 }
@@ -262,15 +267,15 @@ const bots = {
     '0' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:safePlayer}),
     '1' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:balancedPlayer}),
     '2' : new RandomBot({ 'seed': 'test', game: iTreta,enumerate:boldPlayer}),
-    '3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 200 }),
+    //'3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 20 }),
 }
 it('should run', async() => {
 
     expect(typeof Simulate).toBe('function');
-    const state = InitializeGame({ game: iTreta, numPlayers: 4 });
+    const state = InitializeGame({ game: iTreta, numPlayers: 3 });
     const { state: endState } = await Simulate({ game: iTreta, bots, state });
     expect(endState.ctx.gameover).not.toBeUndefined();
-
+ 
     var data =  await JSON.stringify(endState); 
     fs.writeFile("./public/teste.json", data, (err) => {
         if (err) throw err;
