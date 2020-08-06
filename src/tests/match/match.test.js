@@ -247,7 +247,7 @@ const enumerate = (G, ctx) => {
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
         moves.push({ move: 'pass', args: null })
         // for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-        //     moves.push({ move: 'playCard', args: ([i,0]) }); 
+        //     moves.push({ move: 'playCard', args: ([i,0]) });
         // }
     }
     return moves;
