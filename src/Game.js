@@ -70,6 +70,8 @@ export const iTreta = {
     }),
     endIf: (G, ctx) => {
         if (G.players[ctx.currentPlayer].likes > 15) {
+
+            ctx.events.endPhase()
             return { winner: ctx.currentPlayer }
         }
         if(G.players.length===1){
@@ -112,6 +114,10 @@ export const iTreta = {
                     }
                 }
             }, 
+            next: 'finishPhase'
+        },
+        finishPhase:{
+
         }
     },
     ai: {

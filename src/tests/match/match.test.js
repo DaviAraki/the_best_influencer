@@ -119,6 +119,10 @@ const iTreta = ProcessGameConfig({
                     }
                 }
             },
+            next: 'finishPhase'
+        },
+        finishPhase: {
+
         }
     },
 
@@ -267,7 +271,7 @@ it('should run', async() => {
     const { state: endState } = await Simulate({ game: iTreta, bots, state });
     expect(endState.ctx.gameover).not.toBeUndefined();
 
-    var data =  await JSON.stringify(endState);
+    var data =  await JSON.stringify(endState); 
     fs.writeFile("./public/teste.json", data, (err) => {
         if (err) throw err;
     });
