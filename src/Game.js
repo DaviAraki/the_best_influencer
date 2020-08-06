@@ -249,6 +249,7 @@ function endPlayerTurn(G, ctx) {
     for (let i; i < G.players.length; i++) {
         if (G.players[i].reports > 6) {
             G.players.splice(i, 1)
+            ctx.numPlayers = ctx.numPlayers - 1
         }
     }
 }

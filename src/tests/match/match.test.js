@@ -30,6 +30,7 @@ import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal'
 import { RandomBot, MCTSBot } from 'boardgame.io/ai';
 import { InitializeGame, CreateGameReducer } from 'boardgame.io/dist/cjs/internal';
 import {playCard, pass, draw, shuffleDeck, shuffleTopic,chooseTopic,dealTopics, endPlayerTurn} from "../../Game"
+const fs = require('fs');
 
 const iTreta = ProcessGameConfig({
     setup: () => ({
@@ -75,7 +76,7 @@ const iTreta = ProcessGameConfig({
         if (G.players[ctx.currentPlayer].likes > 15) {
             return { winner: G.players[ctx.currentPlayer] }
         }
-        if(G.players.length === 1){
+        if(G.players.length < 2){
             return {winner: G.players[0]}
         }
     },
@@ -153,7 +154,7 @@ const safePlayer= (G,ctx) => {
     }
     if(ctx.activePlayers[ctx.currentPlayer]==="playStage"){
         for(let i=0; i<G.players[ctx.currentPlayer].hand.length; i++){
-            moves.push({move:'playCard', args:[i]});
+            moves.push({move:'playCard', args:([i,0])});
         }
         moves.push({move:'pass', args:null})
     }
@@ -191,7 +192,7 @@ const balancedPlayer = (G, ctx) => {
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
         for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: [i] });
+            moves.push({ move: 'playCard', args: ([i,0]) });
         }
         moves.push({ move: 'pass', args: null })
     }
@@ -229,7 +230,7 @@ const boldPlayer = (G, ctx) => {
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
         for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: [i] });
+            moves.push({ move: 'playCard', args: ([i,0]) });
         }
         moves.push({ move: 'pass', args: null })
     }
@@ -245,24 +246,24 @@ const enumerate = (G, ctx) => {
     }
     if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
         for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
-            moves.push({ move: 'playCard', args: [i] });
+            moves.push({ move: 'playCard', args: ([i,0]) });
         }
         moves.push({ move: 'pass', args: null })
     }
     return moves;
 }
 const bots = {
-    '0' : new RandomBot({ 'seed': 'test', game: iTreta, safePlayer}),
-    '1' : new RandomBot({ 'seed': 'test', game: iTreta, balancedPlayer}),
-    '2' : new RandomBot({ 'seed': 'test', game: iTreta, boldPlayer}),
+    '0' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:safePlayer}),
+    '1' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:balancedPlayer}),
+    '2' : new RandomBot({ 'seed': 'test', game: iTreta,enumerate:boldPlayer}),
     '3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 200 }),
 }
 it('should run', async () => {
 
     expect(typeof Simulate).toBe('function');
     const state = InitializeGame({ game: iTreta, numPlayers: 4 });
-    const { state: endState } = await Simulate({ game: FootRealms, bots, state });
-    expect(endState.ctx.gameover).not.toBeUndefined();
+    const { state: endState } = await Simulate({ game: iTreta, bots, state });
+    //expect(endState.ctx.gameover).not.toBeUndefined();
 
     var data = await JSON.stringify(endState);
     fs.writeFile("./public/teste.json", data, (err) => {
