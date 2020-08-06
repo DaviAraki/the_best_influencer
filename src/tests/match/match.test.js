@@ -125,7 +125,7 @@ const iTreta = ProcessGameConfig({
 });
 
 const safePlayer= (G,ctx) => {
-    let moves =[{}];
+    let moves =[];
 
     if(ctx.activePlayers[ctx.currentPlayer]==="topicSelection"){ 
         let safeChoice = {red:0, yellow:0, green:0, index:0}
@@ -163,7 +163,7 @@ const safePlayer= (G,ctx) => {
     return moves;
 }
 const balancedPlayer = (G, ctx) => {
-    let moves = [{}];
+    let moves = [];
 
     if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
         let balancedChoice = { red: 0, yellow: 0, green: 0, index: 0 }
@@ -201,7 +201,7 @@ const balancedPlayer = (G, ctx) => {
     return moves;
 }
 const boldPlayer = (G, ctx) => {
-    let moves = [{}];
+    let moves = [];
 
     if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
         let boldChoice = { red: 0, yellow: 0, green: 0, index: 0 }
@@ -239,7 +239,7 @@ const boldPlayer = (G, ctx) => {
     return moves;
 }
 const enumerate = (G, ctx) => {
-    let moves = [{}];
+    let moves = [];
 
     if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
         for (let i = 0; i < G.offer.topicsOffer.length; i++) {
@@ -265,7 +265,7 @@ it('should run', async() => {
     expect(typeof Simulate).toBe('function');
     const state = InitializeGame({ game: iTreta, numPlayers: 4 });
     const { state: endState } = await Simulate({ game: iTreta, bots, state });
-    //expect(endState.ctx.gameover).not.toBeUndefined();
+    expect(endState.ctx.gameover).not.toBeUndefined();
 
     var data =  await JSON.stringify(endState);
     fs.writeFile("./public/teste.json", data, (err) => {

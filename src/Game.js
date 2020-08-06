@@ -25,35 +25,34 @@ import topic3 from "./components/Cards/Topics/topic3"
 import topic4 from "./components/Cards/Topics/topic4"
 import topic5 from "./components/Cards/Topics/topic5"
 import generateUniqueId from "./utils/generateUniqueId"
-import { Stage } from 'boardgame.io/core'
 
 export const iTreta = {
     name: "iTreta",
     setup: () => ({
         players: [
             {
-                id: generateUniqueId(),
+                id: "player1",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "player2",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "player3",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
                 reports: 0
             },
             {
-                id: generateUniqueId(),
+                id: "player4",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
@@ -62,7 +61,7 @@ export const iTreta = {
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
-            deck: [].concat(bigExplanation.create(3), boldClaim.create(3), exposed.create(3), goodWill.create(3), lowComent.create(3), netForgives.create(3), netRage.create(3), pushLimits.create(3), redemption.create(3), socialNetwork.create(3), webForgives.create(3), webRage.create(3)),
+            deck: [].concat(bigExplanation.create(10), boldClaim.create(10), exposed.create(10), goodWill.create(10), lowComent.create(10), netForgives.create(10), netRage.create(10), pushLimits.create(10), redemption.create(10), socialNetwork.create(10), webForgives.create(10), webRage.create(10)),
             topicsOffer:[],
             discardPile: [],
             discartedTopics:[]
@@ -71,10 +70,10 @@ export const iTreta = {
     }),
     endIf: (G, ctx) => {
         if (G.players[ctx.currentPlayer].likes > 15) {
-            return { winner: G.players[ctx.currentPlayer] }
+            return { winner: ctx.currentPlayer }
         }
         if(G.players.length===1){
-            return{ winner: G.players[0]}
+            return{ winner: G.players[0].id}
         }
     },
     phases: {
@@ -95,10 +94,10 @@ export const iTreta = {
             }
         },
         playPhase: {
-            onBegin:(G,ctx)=>{
-                dealTopics(G,ctx)     
-            },
             turn: {
+                onBegin: (G, ctx) => {
+                    dealTopics(G, ctx)
+                },
                 activePlayers: {
                     currentPlayer: 'topicSelection',
                 },
@@ -113,6 +112,26 @@ export const iTreta = {
                     }
                 }
             }, 
+        }
+    },
+    ai: {
+        enumerate : (G, ctx) => {
+            let moves = [];
+
+            if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
+                for (let i = 0; i < G.offer.topicsOffer.length; i++) {
+                    moves.push({ move: 'chooseTopic', args: [i] })
+                }
+            }
+            if (ctx.activePlayers[ctx.currentPlayer] === "playStage") {
+                for (let i = 0; i < G.players[ctx.currentPlayer].hand.length; i++) {
+                    moves.push({ move: 'playCard', args: ([i, 0]) });
+                }
+                moves.push({ move: 'pass', args: null })
+            }
+            console.log(moves)
+            return moves;
+            
         }
     },
 
@@ -196,7 +215,9 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
     G.offer.discardPile.push(
         G.players[ctx.currentPlayer].hand[cardIndex]
     );
+    console.log(G.players[ctx.currentPlayer].hand[cardIndex])
     G.players[ctx.currentPlayer].hand.splice(cardIndex, 1)
+    
 }
 function chooseTopic(G, ctx, topicIndex) {
     for (let i = 0; i < G.offer.topicsOffer[topicIndex].red; i++) {
@@ -223,6 +244,7 @@ function chooseTopic(G, ctx, topicIndex) {
     G.offer.discartedTopics.push(
         G.offer.topicsOffer[topicIndex]
     )
+    console.log(G.offer.topicsOffer[topicIndex])
     G.offer.topicsOffer.splice(topicIndex,1);
     ctx.events.endStage();
 }
