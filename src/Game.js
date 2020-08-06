@@ -129,7 +129,6 @@ export const iTreta = {
                 }
                 moves.push({ move: 'pass', args: null })
             }
-            console.log(moves)
             return moves;
             
         }
@@ -215,7 +214,6 @@ function playCard(G, ctx, cardIndex, chosenPlayer) {
     G.offer.discardPile.push(
         G.players[ctx.currentPlayer].hand[cardIndex]
     );
-    console.log(G.players[ctx.currentPlayer].hand[cardIndex])
     G.players[ctx.currentPlayer].hand.splice(cardIndex, 1)
     
 }
@@ -244,7 +242,6 @@ function chooseTopic(G, ctx, topicIndex) {
     G.offer.discartedTopics.push(
         G.offer.topicsOffer[topicIndex]
     )
-    console.log(G.offer.topicsOffer[topicIndex])
     G.offer.topicsOffer.splice(topicIndex,1);
     ctx.events.endStage();
 }

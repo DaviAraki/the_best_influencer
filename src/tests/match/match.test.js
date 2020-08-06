@@ -67,7 +67,7 @@ const iTreta = ProcessGameConfig({
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
-            deck: [].concat(bigExplanation.create(3), boldClaim.create(3), exposed.create(3), goodWill.create(3), lowComent.create(3), netForgives.create(3), netRage.create(3), pushLimits.create(3), redemption.create(3), socialNetwork.create(3), webForgives.create(3), webRage.create(3)),
+            deck: [].concat(bigExplanation.create(5), boldClaim.create(5), exposed.create(5), goodWill.create(5), lowComent.create(5), netForgives.create(5), netRage.create(5), pushLimits.create(5), redemption.create(5), socialNetwork.create(5), webForgives.create(5), webRage.create(5)),
             discardPile: [],
             discartedTopics: [],
             topicsOffer: [],
