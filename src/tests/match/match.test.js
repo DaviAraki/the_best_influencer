@@ -30,6 +30,7 @@ import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal'
 import { RandomBot, MCTSBot } from 'boardgame.io/ai';
 import { InitializeGame, CreateGameReducer } from 'boardgame.io/dist/cjs/internal';
 import {playCard, pass, draw, shuffleDeck, shuffleTopic,chooseTopic,dealTopics, endPlayerTurn} from "../../Game"
+import { Async } from "boardgame.io/dist/cjs/base-bdd9c13b"
 const fs = require('fs');
 
 const iTreta = ProcessGameConfig({
@@ -99,10 +100,11 @@ const iTreta = ProcessGameConfig({
             }
         },
         playPhase: {
-            onBegin: (G, ctx) => {
-                dealTopics(G, ctx)
-            },
+            
             turn: {
+                onBegin: (G, ctx) => {
+                    dealTopics(G, ctx)
+                },
                 activePlayers: {
                     currentPlayer: 'topicSelection',
                 },
@@ -258,14 +260,14 @@ const bots = {
     '2' : new RandomBot({ 'seed': 'test', game: iTreta,enumerate:boldPlayer}),
     '3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 200 }),
 }
-it('should run', async () => {
+it('should run', async() => {
 
     expect(typeof Simulate).toBe('function');
     const state = InitializeGame({ game: iTreta, numPlayers: 4 });
     const { state: endState } = await Simulate({ game: iTreta, bots, state });
     //expect(endState.ctx.gameover).not.toBeUndefined();
 
-    var data = await JSON.stringify(endState);
+    var data =  await JSON.stringify(endState);
     fs.writeFile("./public/teste.json", data, (err) => {
         if (err) throw err;
     });
