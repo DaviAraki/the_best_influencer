@@ -95,10 +95,10 @@ export const iTreta = {
             }
         },
         playPhase: {
-            onBegin:(G,ctx)=>{
-                dealTopics(G,ctx)     
-            },
             turn: {
+                onBegin: (G, ctx) => {
+                    dealTopics(G, ctx)
+                },
                 activePlayers: {
                     currentPlayer: 'topicSelection',
                 },
