@@ -289,10 +289,8 @@ function skip(G,ctx){
     ctx.events.endTurn()
 }
 function endPlayerTurn(G, ctx) {
-    console.log("here")
     for (let i=0 ; i < G.players.length; i++) {
         if (G.players[i].reports > 4) {
-            console.log(G.players[i].reports)
             G.players[i].eliminated = true
             for(let o=0; o<G.offer.activePlayers.length; o++){
                 if(G.offer.activePlayers[o]===i){

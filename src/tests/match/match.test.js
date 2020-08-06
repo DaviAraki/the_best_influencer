@@ -29,39 +29,43 @@ import { Simulate } from 'boardgame.io/ai'
 import { ProcessGameConfig } from 'boardgame.io/dist/cjs/internal'
 import { RandomBot, MCTSBot } from 'boardgame.io/ai';
 import { InitializeGame, CreateGameReducer } from 'boardgame.io/dist/cjs/internal';
-import {playCard, pass, draw, shuffleDeck, shuffleTopic,chooseTopic,dealTopics, endPlayerTurn} from "../../Game"
+import {playCard, pass, draw, shuffleDeck, shuffleTopic,chooseTopic,dealTopics, endPlayerTurn, skip} from "../../Game"
 const fs = require('fs');
 
 const iTreta = ProcessGameConfig({
     setup: () => ({
         players: [
             {
-                id: "safePlayer"(),
+                id: "safePlayer",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
-                id: "balancedPlayer"(),
+                id: "balancedPlayer",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
-                id: "boldPlayer"(),
+                id: "boldPlayer",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             },
             {
-                id: "MCTS"(),
+                id: "MCTS",
                 hand: [],
                 board: { red: [], yellow: [], green: [] },
                 likes: 0,
-                reports: 0
+                reports: 0,
+                eliminated: false
             }
         ],
         offer: {
@@ -70,16 +74,19 @@ const iTreta = ProcessGameConfig({
             discardPile: [],
             discartedTopics: [],
             topicsOffer: [],
+            activePlayers: [0, 1, 2]
         },
     }),
     endIf: (G, ctx) => {
-        if (G.players[ctx.currentPlayer].likes > 15) {
+        if ((G.players[ctx.currentPlayer].likes > 15) & (!G.players[ctx.currentPlayer].eliminated)) {
             ctx.events.endPhase()
             return { winner: ctx.currentPlayer }
         }
-        if (G.players.length === 1) {
-            ctx.events.endPhase()
-            return { winner: G.players[0].id }
+        if (G.offer.activePlayers.length < 2) {
+            if (G.offer.activePlayers.length === 1) {
+                return { winner: G.offer.activePlayers[0] }
+            }
+            else return { draw: true }
         }
     },
     phases: {
@@ -100,7 +107,6 @@ const iTreta = ProcessGameConfig({
             }
         },
         playPhase: {
-            
             turn: {
                 onBegin: (G, ctx) => {
                     dealTopics(G, ctx)
@@ -111,7 +117,7 @@ const iTreta = ProcessGameConfig({
                 stages: {
                     topicSelection: {
                         next: 'playStage',
-                        moves: { chooseTopic },
+                        moves: { chooseTopic, skip },
                     },
                     playStage: {
                         moves: { playCard, pass },
