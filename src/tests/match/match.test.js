@@ -59,14 +59,14 @@ const iTreta = ProcessGameConfig({
                 reports: 0,
                 eliminated: false
             },
-            {
-                id: "MCTS",
-                hand: [],
-                board: { red: [], yellow: [], green: [] },
-                likes: 0,
-                reports: 0,
-                eliminated: false
-            }
+            // {
+            //     id: "MCTS",
+            //     hand: [],
+            //     board: { red: [], yellow: [], green: [] },
+            //     likes: 0,
+            //     reports: 0,
+            //     eliminated: false
+            // }
         ],
         offer: {
             topics: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
@@ -78,7 +78,7 @@ const iTreta = ProcessGameConfig({
         },
     }),
     endIf: (G, ctx) => {
-        if ((G.players[ctx.currentPlayer].likes > 15) & (!G.players[ctx.currentPlayer].eliminated)) {
+        if ((G.players[ctx.currentPlayer].likes > 15) && (!G.players[ctx.currentPlayer].eliminated)) {
             ctx.events.endPhase()
             return { winner: ctx.currentPlayer }
         }
@@ -137,6 +137,9 @@ const iTreta = ProcessGameConfig({
 const safePlayer= (G,ctx) => {
     let moves =[];
     if (ctx.phase !== null) {
+        if (G.players[ctx.currentPlayer].eliminated === true) {
+            moves.push({ move: 'skip', args: null })
+        } else
         if(ctx.activePlayers[ctx.currentPlayer]==="topicSelection"){ 
             let safeChoice = {red:0, yellow:0, green:0, index:0}
             for(let i=0; i<G.offer.topicsOffer.length ; i++){
@@ -176,6 +179,9 @@ const safePlayer= (G,ctx) => {
 const balancedPlayer = (G, ctx) => {
     let moves = [];
     if (ctx.phase !== null) {
+        if (G.players[ctx.currentPlayer].eliminated === true) {
+            moves.push({ move: 'skip', args: null })
+        } else
         if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
             let balancedChoice = { red: 0, yellow: 0, green: 0, index: 0 }
             for (let i = 0; i < G.offer.topicsOffer.length; i++) {
@@ -216,6 +222,9 @@ const boldPlayer = (G, ctx) => {
     let moves = [];
 
     if(ctx.phase !== null){
+        if(G.players[ctx.currentPlayer].eliminated===true){
+            moves.push({ move: 'skip', args: null })
+        }else
         if (ctx.activePlayers[ctx.currentPlayer] === "topicSelection") {
             let boldChoice = { red: 0, yellow: 0, green: 0, index: 0 }
             for (let i = 0; i < G.offer.topicsOffer.length; i++) {
@@ -272,7 +281,7 @@ const enumerate = (G, ctx) => {
 const bots = {
     '0' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:safePlayer}),
     '1' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:balancedPlayer}),
-    '2' : new RandomBot({ 'seed': 'test', game: iTreta,enumerate:boldPlayer}),
+    '2' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:boldPlayer}),
     //'3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 20 }),
 }
 it('should run', async() => {
