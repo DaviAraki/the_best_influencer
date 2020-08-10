@@ -290,7 +290,7 @@ function skip(G,ctx){
 }
 function endPlayerTurn(G, ctx) {
     for (let i=0 ; i < G.players.length; i++) {
-        if (G.players[i].reports > 4) {
+        if (G.players[i].reports > 5) {
             G.players[i].eliminated = true
             for(let o=0; o<G.offer.activePlayers.length; o++){
                 if(G.offer.activePlayers[o]===i){

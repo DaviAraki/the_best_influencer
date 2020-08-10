@@ -78,13 +78,26 @@ const iTreta = ProcessGameConfig({
         },
     }),
     endIf: (G, ctx) => {
-        if ((G.players[ctx.currentPlayer].likes > 15) && (!G.players[ctx.currentPlayer].eliminated)) {
+        if ((G.players[ctx.currentPlayer].likes > 10) && (!G.players[ctx.currentPlayer].eliminated)) {
             ctx.events.endPhase()
-            return { winner: ctx.currentPlayer }
+            return { winner: ctx.currentPlayer,
+                     P0Likes: G.players[0].likes,
+                     P0Reports: G.players[0].reports, 
+                     P1Likes: G.players[1].likes,
+                     P1Reports: G.players[1].reports,
+                     P2Likes: G.players[2].likes,
+                     P2Reports: G.players[2].reports
+                    }
         }
         if (G.offer.activePlayers.length < 2) {
             if (G.offer.activePlayers.length === 1) {
-                return { winner: G.offer.activePlayers[0] }
+                return { winner: G.offer.activePlayers[0],
+                        P0Likes: G.players[0].likes,
+                        P0Reports: G.players[0].reports,
+                        P1Likes: G.players[1].likes,
+                        P1Reports: G.players[1].reports,
+                        P2Likes: G.players[2].likes,
+                        P2Reports: G.players[2].reports }
             }
             else return { draw: true }
         }
@@ -284,16 +297,50 @@ const bots = {
     '2' : new RandomBot({ 'seed': 'test', game: iTreta, enumerate:boldPlayer}),
     //'3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 20 }),
 }
-it('should run', async() => {
 
-    expect(typeof Simulate).toBe('function');
-    const state = InitializeGame({ game: iTreta, numPlayers: 3 });
-    const { state: endState } = await Simulate({ game: iTreta, bots, state });
-    expect(endState.ctx.gameover).not.toBeUndefined();
- 
-    var data =  await JSON.stringify(endState); 
-    fs.writeFile("./public/teste.json", data, (err) => {
+
+it('should run', async () => {
+    let P0Reports, P0Likes, P0Wins, P1Reports, P1Likes, P1Wins, P2Reports, P2Likes, P2Wins
+    P0Wins = 0;
+    P1Wins = 0;
+    P2Wins = 0;
+    P0Reports = 0;
+    P0Likes = 0;
+    P1Reports = 0;
+    P1Likes = 0;
+    P2Reports = 0;
+    P2Likes = 0
+    for (let i = 0; i < 500; i++) {
+        expect(typeof Simulate).toBe('function');
+        const state = InitializeGame({ game: iTreta, numPlayers: 3 });
+        const { state: endState } = await Simulate({ game: iTreta, bots, state });
+        expect(endState.ctx.gameover).not.toBeUndefined();
+        if (endState.ctx.gameover.winner === 0 || endState.ctx.gameover.winner === "0" ){
+            P0Wins = P0Wins +1
+        } else if (endState.ctx.gameover.winner === 1 || endState.ctx.gameover.winner === "1" ){
+            P1Wins = P1Wins +1
+        }else{
+            P2Wins = P2Wins +1
+        }
+        P0Reports = P0Reports + endState.ctx.gameover.P0Reports
+        P1Reports = P1Reports + endState.ctx.gameover.P1Reports
+        P2Reports = P2Reports + endState.ctx.gameover.P2Reports
+        P0Likes = P0Likes + endState.ctx.gameover.P0Likes
+        P1Likes = P1Likes + endState.ctx.gameover.P1Likes
+        P2Likes = P2Likes + endState.ctx.gameover.P2Likes
+
+        var data = await JSON.stringify(endState.ctx.gameover);
+        expect(data).not.toBeUndefined
+        fs.writeFile(("./public/match10l6r" + i + ".json"), data, (err) => {
+            if (err) throw err;
+        });
+    }
+
+    var resume = { P0Reports, P0Likes, P0Wins, P1Reports, P1Likes, P1Wins, P2Reports, P2Likes, P2Wins}
+    var data2 = JSON.stringify(resume)
+    expect(data2).not.toBeUndefined 
+    fs.writeFile(("./public/resumes/match10l6rResume.json"), data2, (err) => {
         if (err) throw err;
     });
-    expect(data).not.toBeUndefined
+ 
 });
