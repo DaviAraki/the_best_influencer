@@ -1,7 +1,7 @@
 var fs = require('fs');
+const converter = require('json-2-csv');
 
-
-it('should run', async () => {
+it('should run', () => {
     function readFiles(dirname, onFileContent, onError) {
         fs.readdir(dirname, function (err, filenames) {
             if (err) {
@@ -18,14 +18,25 @@ it('should run', async () => {
                 });
             });
         });
-    }
+    } 
     var dataJson = {};
     readFiles('./public/match105/', function (filename, content) {
         dataJson[filename] = content;
     }, function (err) {
         throw err;
     });
-    expect(dataJson).not.toBeUndefined 
+    
+    converter.json2csv(dataJson, (err, csv) => {
+        if (err) {
+            throw err;
+        }
 
+        // print CSV string
+        console.log(csv);
+        fs.writeFileSync('./public/match105.csv', csv);
+    });
+   
+
+    expect(dataJson).not.toBeUndefined 
 });
     
