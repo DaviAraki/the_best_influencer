@@ -298,6 +298,7 @@ const bots = {
     //'3' : new MCTSBot({ 'seed': 'test', game: iTreta, enumerate, iterations: 20 }),
 }
 
+let P2L106 = [];
 
 it('should run', async () => {
     let P0Reports, P0Likes, P0Wins, P1Reports, P1Likes, P1Wins, P2Reports, P2Likes, P2Wins
@@ -311,7 +312,7 @@ it('should run', async () => {
     P2Reports = 0;
     P2Likes = 0
 
-    let vector = [];
+    
     for (let i = 0; i < 500; i++) {
         expect(typeof Simulate).toBe('function');
         const state = InitializeGame({ game: iTreta, numPlayers: 3 });
@@ -324,6 +325,7 @@ it('should run', async () => {
         }else{
             P2Wins = P2Wins +1
         }
+        P2L106[i]= endState.ctx.gameover.P2Likes;
         P0Reports = P0Reports + endState.ctx.gameover.P0Reports
         P1Reports = P1Reports + endState.ctx.gameover.P1Reports
         P2Reports = P2Reports + endState.ctx.gameover.P2Reports
@@ -333,16 +335,21 @@ it('should run', async () => {
 
         var data = await JSON.stringify(endState.ctx.gameover);
         expect(data).not.toBeUndefined
-        fs.writeFile(("./public/match10l6r" + i + ".json"), data, (err) => {
-            if (err) throw err;
-        });
+        // fs.writeFile(("./public/match10l6r" + i + ".json"), data, (err) => {
+        //     if (err) throw err;
+        // });
     }
 
-    var resume = { P0Reports, P0Likes, P0Wins, P1Reports, P1Likes, P1Wins, P2Reports, P2Likes, P2Wins}
-    vector[i] = resume
+    var data3 = JSON.stringify(P2L106)
+    var resume = {P0Reports, P0Likes, P0Wins, P1Reports, P1Likes, P1Wins, P2Reports, P2Likes, P2Wins}
     var data2 = JSON.stringify(resume)
+    
     expect(data2).not.toBeUndefined 
     fs.writeFile(("./public/resumes/match10l6rResume.json"), data2, (err) => {
+        if (err) throw err;
+    });
+    expect(data3).not.toBeUndefined 
+    fs.writeFile(("./public/p2likes106.json"), data3, (err) => {
         if (err) throw err;
     });
  
