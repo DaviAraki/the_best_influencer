@@ -1,0 +1,112 @@
+.game-card-reactions {
+    box-sizing: border-box;
+    background-color: #8c00ff;
+    padding: 1.5mm;
+    border: 1.5mm solid rgba(0, 0, 0, 0.6);
+    width: 45mm;
+    height: 65mm;
+    border-radius: 3mm;
+    position: relative;
+    margin: 0.5mm;
+    color: hsla(200, 100%, 100%, 100%)
+  }
+  .game-card-reactions:hover{
+    transform: scale(2);
+    z-index: 1;
+  }
+  
+  .game-card-reactions > div {
+    background-color: #0d81ff;
+    position: absolute;
+    height: 7mm;
+    box-sizing: border-box;
+    border: 0.5mm solid rgba(0, 0, 0, 0.6);
+    border-radius: 3mm;
+    padding: 1mm;
+    line-height: 4mm;
+    font-size: 4mm;
+    text-transform: uppercase;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0.5mm 0.5mm rgba(0, 0, 0, 0.2);
+    
+    font-weight: bold;
+  }
+  
+  .game-card-reactions > div > label {
+    flex: 2;
+  }
+  
+  .game-card-reactions > div > div {
+    flex: 1;
+  }
+  
+  .game-card-reactions .name {
+    width: calc(100% - 3mm);
+    display: block;
+    text-align: center;
+    border-radius: 2mm;
+  }
+  .game-card-reactions .green {
+    background-color: #19FF67;
+    top: 15%;
+    left: 3%;
+    line-height: 7mm;
+    font-size: 6mm;
+    height: 65%;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+  .game-card-reactions .yellow {
+    background-color: #FFAC1C;
+    display: flex;
+    left: 15%;
+    bottom: 5%;
+    line-height: 7mm;
+    font-size: 6mm;
+    height: 15%;
+    width: 70%;
+    justify-content: center;
+    
+  }
+  .game-card-reactions .red {
+    background-color: #FC0E08;
+    top: 15%;
+    right: 3%;
+    line-height: 7mm;
+    font-size: 6mm;
+    height: 65%;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+
+  .game-card-reactions .textBox{
+    background-color: #0d81ff;
+    color: black;
+    right: 20%;
+    top:25%;
+    line-height: 7mm;
+    font-size: 3mm;
+    height: 50%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  
+  .game-card-reactions .discard {
+    right: 1.5mm;
+    bottom: 1.5mm;
+    background-color: red;
+  }
+  

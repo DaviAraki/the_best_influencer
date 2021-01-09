@@ -7,7 +7,8 @@ export default class lowComent extends basicReaction {
             green: { reports: 0, likes: 1 },
             yellow: { reports: 0, likes: 3 },
             red: { reports: 0, likes: 3 },
-            use: 3
+            use: 3,
+            textBox:"Target Player: 🟨" 
         })
     }
 

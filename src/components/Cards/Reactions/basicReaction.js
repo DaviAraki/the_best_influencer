@@ -1,6 +1,6 @@
 import generateUniqueId from "../../../utils/generateUniqueId"
 
-export default class BasicTopic {
+export default class BasicReaction {
     constructor(data) {
         this.id = generateUniqueId();
         this.name = data.name;
@@ -8,6 +8,7 @@ export default class BasicTopic {
         this.yellow = data.yellow || { reports: 0, likes: 0 };
         this.green = data.green || { reports: 0, likes: 0 };
         this.use = data.use || 0;
+        this.textBox = data.textBox || " "
 
     }
 }

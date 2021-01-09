@@ -7,7 +7,8 @@ export default class boldClaim extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 1, likes: 0 },
             red: { reports: 1, likes: 0 },
-            use: 11
+            use: 11,
+            textBox:"Target Player: +🚫👍👍👍" 
         })
     }
 

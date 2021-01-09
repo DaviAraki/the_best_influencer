@@ -7,7 +7,8 @@ export default class goodWill extends basicReaction {
             green: { reports: 0, likes: 1 },
             yellow: { reports: 0, likes: 3 },
             red: { reports: 0, likes: 3 },
-            use: 9
+            use: 9,
+            textBox:"Current Player:\n + 👍👍👍 \n All players: -🚫" 
         })
     }
 

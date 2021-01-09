@@ -7,7 +7,8 @@ export default class netRage extends basicReaction {
             green:{reports:0,likes:1},
             yellow: { reports: 0, likes:1 },
             red: { reports: 0, likes:1 },
-            use:1
+            use:1,
+            textBox:"All players: +🚫" 
         })
     }
 

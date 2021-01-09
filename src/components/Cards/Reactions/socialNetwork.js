@@ -7,7 +7,8 @@ export default class socialNetwork extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 2, likes: 0 },
             red: { reports: 2, likes: 0 },
-            use: 12
+            use: 12,
+            textBox:"Current Player: + 👍 \n All players: +👍" 
         })
     }
 

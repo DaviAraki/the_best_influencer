@@ -1,0 +1,58 @@
+.player-board {
+  padding: 2mm;
+  margin: 0.5mm;
+  background-color: hsla(120, 53%, 79%, 50%);
+  border: 2mm solid hsla(0, 0%, 0%, 60%);
+  border-radius: 2mm;
+  display: flex;
+  flex-wrap: wrap;
+}
+.player-board .passButton{
+  right: 1.5mm;
+  bottom: 1.5mm;
+  background-color: lightblue;
+}
+.player-board h1 {
+  font-size: 5mm;
+  font-size: 5mm;
+}
+.player-board > h1,
+.player-board > .player-hand {
+  width: 100%;
+}
+.player-board > .player-admnistration{
+  width: 100%;
+}
+.player-board > .player-discard{
+  width: 100%;
+}
+.player-board .redBoard{
+  display: flex;
+  background-color: #FC0E08;
+  width: 100%;
+}
+.player-board .yellowBoard{
+  display: flex;
+  background-color: #FFAC1C;
+}
+.player-board .greenBoard{
+  display: flex;
+  background-color: #19FF67;
+}
+
+
+.player-hand > div,
+.player-admnistration > div,
+.player-deck  > div,
+.player-discard  > div {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.player-deck {
+  opacity: 0.7;
+}
+.player-deck:hover {
+  opacity: 1;
+}

@@ -7,7 +7,9 @@ export default class redemption extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 2, likes: 0 },
             red: { reports: 2, likes: 0 },
-            use: 6
+            use: 6,
+            textBox:"Current Player: -🚫🚫" 
+
         })
     }
 

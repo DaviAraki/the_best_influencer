@@ -7,7 +7,8 @@ export default class exposed extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 1, likes: 0 },
             red: { reports: 1, likes: 0 },
-            use: 5
+            use: 5,
+            textBox:"Current Player: -🚫🚫 Target player: +🚫" 
         })
     }
 

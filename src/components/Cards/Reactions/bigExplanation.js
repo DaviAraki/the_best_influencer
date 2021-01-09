@@ -7,7 +7,8 @@ export default class bigExplanation extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 1, likes: 0 },
             red: { reports: 2, likes: 0 },
-            use: 4
+            use: 4,
+            textBox:"Target Player: 🟩" 
         })
     }
 

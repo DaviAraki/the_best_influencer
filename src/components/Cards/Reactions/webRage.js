@@ -7,7 +7,8 @@ export default class webRage extends basicReaction {
             green: { reports: 0, likes: 1 },
             yellow: { reports: 0, likes: 1 },
             red: { reports: 0, likes: 3 },
-            use: 8
+            use: 8,
+            textBox:"All players: +🚫🚫" 
         })
     }
 

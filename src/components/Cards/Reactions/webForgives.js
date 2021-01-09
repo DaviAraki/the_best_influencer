@@ -7,7 +7,8 @@ export default class webForgives extends basicReaction {
             green: { reports: 0, likes: 1 },
             yellow: { reports: 0, likes: 1 },
             red: { reports: 0, likes: 1 },
-            use: 7
+            use: 7,
+            textBox:"All players: -🚫🚫" 
         })
     }
 

@@ -5,7 +5,7 @@ export default class boldMemeTopic extends basicTopic {
         super({
             name: "boldMemeTopic",
             yellow: 2,
-            red: 1
+            red: 1,
         })
     }
 

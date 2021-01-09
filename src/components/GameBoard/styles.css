@@ -1,0 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@500;700&display=swap");
+
+.game-board {
+  font-family: Rubik, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialised;
+  max-width: calc(1.1 * 6 * 45mm);
+  width: 100%;
+  margin: 0;
+  padding: 3mm;
+  border: 3mm solid hsla(120, 100%, 10%, 100%);
+  background-color: #a43cff;
+  border-radius: 3mm;
+  zoom: 0.6;
+}
+
+.card-offer,
+.player-boards {
+  padding: 3mm;
+  border: 3mm dotted hsla(120, 100%, 10%, 30%);
+  border-radius: 3mm;
+  margin-bottom: 3mm;
+}
+.card-offer .card-offer-cards{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.card-offer h1,
+.player-boards h1 {
+    color: hsla(120, 100%, 10%, 100%);
+    margin: 0mm 0mm 3mm 0mm;
+    
+}

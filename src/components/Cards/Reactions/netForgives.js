@@ -7,7 +7,8 @@ export default class netForgives extends basicReaction {
             green: { reports: 0, likes: 0 },
             yellow: { reports: 1, likes: 0 },
             red: { reports: 2, likes: 0 },
-            use: 10
+            use: 10,
+            textBox:"All players: -🚫" 
         })
     }
 
