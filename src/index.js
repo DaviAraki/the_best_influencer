@@ -6,12 +6,22 @@ import { Local } from 'boardgame.io/multiplayer';
 import GameBoard from './components/GameBoard';
 import { iTreta } from './Game';
 
+const {protocol, hostname, port} = window.location;
+const server = `$protocol//${hostname}:${port}`
+
 const ITretaClient = Client({
   game: iTreta,
   board: GameBoard,
   numPlayers: 4,
-  multiplayer: SocketIO({server: 'localhost:8000'}),
+  multiplayer: SocketIO({server}),
 });
+
+// const ITretaClient = Client({
+//   game: iTreta,
+//   board: GameBoard,
+//   numPlayers: 4,
+//   multiplayer: SocketIO({server: 'https://thebestinfluencer.herokuapp.com'}),
+// });
 
 //const App = Client({ game: iTreta });
 
