@@ -1,7 +1,7 @@
 const { Server } = require('boardgame.io/server');
 import path from 'path'
 import serve from 'koa-static'
-const { iTreta } = require('./Game');
+const { iTreta } = require('./src/Game');
 
 const server = Server({ games: [iTreta] });
 const PORT = process.env.PORT || 8000;
