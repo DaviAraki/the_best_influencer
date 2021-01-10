@@ -7,7 +7,7 @@ import GameBoard from './components/GameBoard';
 import { iTreta } from './Game';
 
 const {protocol, hostname, port} = window.location;
-const server = `$protocol//${hostname}:${port}`
+const server = `${protocol}//${hostname}:${port}`
 
 const ITretaClient = Client({
   game: iTreta,
