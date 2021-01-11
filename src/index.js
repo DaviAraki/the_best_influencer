@@ -13,7 +13,7 @@ const ITretaClient = Client({
   game: iTreta,
   board: GameBoard,
   numPlayers: 4,
-  multiplayer: SocketIO({server}),
+  multiplayer: Local(),
 });
 
 // const ITretaClient = Client({

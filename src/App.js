@@ -13,7 +13,7 @@ const ITretaClient = Client({
   game: iTreta,
   board: GameBoard,
   numPlayers: 4,
-  multiplayer: SocketIO({server}),
+  multiplayer: Local(),
 });
 
 // const ITretaClient = Client({
@@ -49,6 +49,12 @@ class App extends React.Component {
           </button>
           <button onClick={() => this.setState({ playerID: "1" })}>
             Player 1
+          </button>
+          <button onClick={() => this.setState({ playerID: "2" })}>
+            Player 2
+          </button>
+          <button onClick={() => this.setState({ playerID: "3" })}>
+            Player 3
           </button>
         </div>
       );
