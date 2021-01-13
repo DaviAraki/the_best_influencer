@@ -20,9 +20,9 @@ export const iTreta = {
             else return{draw : true}
         }
     },
-    playerView: (G, ctx, playerID) => {
-        return stripSecrets(G, playerID);
-    },
+    // playerView: (G, ctx, playerID) => {
+    //     return stripSecrets(G, playerID);
+    // },
     phases: {
         setupPhase: {
             start: true,
