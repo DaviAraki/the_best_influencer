@@ -1,6 +1,6 @@
-const { Server } = require('boardgame.io/server');
 import path from 'path'
 import serve from 'koa-static'
+const { Server } = require('boardgame.io/server');
 const { iTreta } = require('./src/Game');
 
 const server = Server({ games: [iTreta] });
