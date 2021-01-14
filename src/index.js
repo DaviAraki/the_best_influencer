@@ -30,9 +30,9 @@ const ITretaClient = Client({
 const App = () => (
   <div>
     <ITretaClient playerID="0" />
-    <ITretaClient playerID="1" />
+    {/* <ITretaClient playerID="1" />
     <ITretaClient playerID="2" />
-    <ITretaClient playerID="3" />   
+    <ITretaClient playerID="3" />    */}
   </div>
 );
 //export default App;

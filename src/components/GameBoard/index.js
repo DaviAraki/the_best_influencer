@@ -4,7 +4,7 @@ import GameCardTopics from "../GameCardTopics";
 import GamePlayerBoard from "../GamePlayerBoard";
 import "./styles.css";
 
-export default function GameBoard({G, ctx, moves, events}) {
+export default function GameBoard({G, ctx, moves, events, playerID}) {
   function chooseTopicHandler(k) {
     console.log(`chooseTopicHandler`, k);
     moves.chooseTopic(k);
@@ -17,6 +17,20 @@ export default function GameBoard({G, ctx, moves, events}) {
     console.log(`passPhase`);
     moves.pass();
   }
+  console.log(playerID)
+
+  let allTopics = G.offer.allTopicsCards.map((card, k)=> (
+    <GameCardTopics 
+      card={card}
+      key={card.id}
+      />
+  ))
+  let allReactions = G.offer.allReactionsCards.map((card, k)=> (
+    <GameCardReactions 
+      card={card}
+      key={card.id}
+      />
+  ))
 
   let cards = G.offer.topicsOffer.map((card, k) => (
     <GameCardTopics
@@ -30,13 +44,14 @@ export default function GameBoard({G, ctx, moves, events}) {
   let players = G.players.map((player, k) => (
     <GamePlayerBoard
       player={player}
+      oculto={playerID!==String(k)}
       key={`player${k}`}
       clickPassPhase={clickPassPhase.bind(this)}
       playCardHandler={playCardHandler.bind(this)}
     />
   ));
   return (
-    <div className="game-board">
+    <div className="game-board" style={{position:"relative"}}>
       <div className="card-offer">
         <h1>Offer:</h1>
         <div className="card-offer-cards">{cards}</div>
@@ -45,6 +60,12 @@ export default function GameBoard({G, ctx, moves, events}) {
         <h1>Players:</h1>
         <div className="player-areas">{players}</div>
       </div>
+     {/* <div className="allTopics">
+        {allTopics}  
+     </div> 
+     <div className="allReactions">
+        {allReactions}   */}
+     {/* </div>  */}
     </div>
   );
 }

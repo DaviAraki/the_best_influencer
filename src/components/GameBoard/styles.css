@@ -4,20 +4,21 @@
   font-family: Rubik, Arial, Helvetica, sans-serif;
   font-size: 14px;
   -webkit-font-smoothing: antialised;
-  max-width: calc(1.1 * 6 * 45mm);
+  max-width: calc(1.1 * 7 * 45mm);
   width: 100%;
   margin: 0;
   padding: 3mm;
-  border: 3mm solid hsla(120, 100%, 10%, 100%);
+  border: 3mm solid rgb(45, 0, 51);
   background-color: #a43cff;
   border-radius: 3mm;
   zoom: 0.6;
+  position: relative;
 }
 
 .card-offer,
 .player-boards {
   padding: 3mm;
-  border: 3mm dotted hsla(120, 100%, 10%, 30%);
+  border: 3mm dotted rgba(51, 0, 38, 0.3);
   border-radius: 3mm;
   margin-bottom: 3mm;
 }
