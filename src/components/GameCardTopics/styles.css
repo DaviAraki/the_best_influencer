@@ -3,10 +3,11 @@
     background-color:  #8c00ff;
     padding: 1.5mm;
     border: 1.5mm solid rgba(0, 0, 0, 0.6);
-    width: 45mm;
-    height: 65mm;
+    width: 63.5mm;
+    height: 88mm;
     border-radius: 3mm;
     position: relative;
+    display: inline-block;
     margin: 0.5mm;
     color: hsla(200, 100%, 100%, 100%)
   }
@@ -86,4 +87,10 @@
     bottom: 1.5mm;
     background-color: blue;
   }
-  
+  @media print {
+    .game-card-topics {
+      -webkit-break-inside: avoid;
+      break-inside: avoid;
+      -webkit-print-color-adjust: exact; 
+    }
+  }

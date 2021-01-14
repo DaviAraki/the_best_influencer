@@ -21,6 +21,7 @@ export default class GameBoard extends React.Component {
 
   }
   render() {
+    console.log(this.props.oculto)
     let cardsInRedBoard = this.props.player.board.red.map((card) => (
         <GameCardReaction card={card} key={card.id}/>
       ));  
@@ -30,7 +31,6 @@ export default class GameBoard extends React.Component {
     let cardsInGreenBoard = this.props.player.board.green.map((card) => (
       <GameCardReaction card={card} key={card.id}/>
     ));
-      
     let cardsHand = this.props.player.hand.map((card, k) => (
        <GameCardReaction card={card} key={card.id} onClickPlayCard={()=>{this.playCardHandler(k)}}/>
     ));
@@ -57,7 +57,7 @@ export default class GameBoard extends React.Component {
         </div>
         <div className="player-hand">
           <h1>Hand</h1>
-          <div>{cardsHand}</div>
+          <div>{this.props.oculto?cardsHand.length: cardsHand}</div>
         </div>
         {/* <div className="player-deck">
           <h1>Deck:</h1>
