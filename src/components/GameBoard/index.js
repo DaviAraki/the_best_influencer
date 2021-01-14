@@ -19,18 +19,7 @@ export default function GameBoard({G, ctx, moves, events, playerID}) {
   }
   console.log(playerID)
 
-  let allTopics = G.offer.allTopicsCards.map((card, k)=> (
-    <GameCardTopics 
-      card={card}
-      key={card.id}
-      />
-  ))
-  let allReactions = G.offer.allReactionsCards.map((card, k)=> (
-    <GameCardReactions 
-      card={card}
-      key={card.id}
-      />
-  ))
+
 
   let cards = G.offer.topicsOffer.map((card, k) => (
     <GameCardTopics
