@@ -232,9 +232,9 @@ function endPlayerTurn(G, ctx) {
     for (let i=0 ; i < G.players.length; i++) {
         if (G.players[i].reports > 5) {
             G.players[i].eliminated = true
-            for(let o=0; o<G.offer.activePlayers.length; o++){
-                if(G.offer.activePlayers[o]===i){
-                    G.offer.activePlayers.splice(o,1)
+            for(let j=0; j<G.offer.activePlayers.length; j++){
+                if(G.offer.activePlayers[j]===i){
+                    G.offer.activePlayers.splice(j,1)
                 }
             }
         }

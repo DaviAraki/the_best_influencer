@@ -40,6 +40,10 @@
   background-color: #19FF67;
 }
 
+.active{
+  background-color: cornsilk;
+}
+
 
 .player-hand > div,
 .player-admnistration > div,

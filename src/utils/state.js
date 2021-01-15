@@ -30,7 +30,8 @@ export default {
 
     players: [
         {
-            playerID: "player1",
+            name:"Player 1",
+            playerID: "0",
             hand: [],
             board: { red: [], yellow: [], green: [] },
             likes: 0,
@@ -38,7 +39,8 @@ export default {
             eliminated: false
         },
         {
-            playerID: "player2",
+            name:"Player 2",
+            playerID: "1",
             hand: [],
             board: { red: [], yellow: [], green: [] },
             likes: 0,
@@ -46,7 +48,8 @@ export default {
             eliminated: false
         },
         {
-            playerID: "player3",
+            name:"Player 3",
+            playerID: "2",
             hand: [],
             board: { red: [], yellow: [], green: [] },
             likes: 0,
@@ -54,7 +57,8 @@ export default {
             eliminated: false
         },
         {
-            playerID: "player4",
+            name:"Player 4",
+            playerID: "3",
             hand: [],
             board: { red: [], yellow: [], green: [] },
             likes: 0,

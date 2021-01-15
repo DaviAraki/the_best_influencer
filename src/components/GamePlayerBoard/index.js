@@ -21,7 +21,6 @@ export default class GameBoard extends React.Component {
 
   }
   render() {
-    console.log(this.props.oculto)
     let cardsInRedBoard = this.props.player.board.red.map((card) => (
         <GameCardReaction card={card} key={card.id}/>
       ));  
@@ -43,10 +42,11 @@ export default class GameBoard extends React.Component {
 
 
     return (
-      <div className="player-board">
-        
+      <div className={this.props.current===this.props.player.playerID?'player-board active':'player-board'}>
+        <h1>{this.props.current===this.props.player.playerID?'ACTIVE PLAYER':''}</h1>
+        <h1>{String(this.props.current)}</h1>    
         <h1>{this.props.player.name} </h1>
-    <h1>Likes: {this.props.player.likes} Reports: {this.props.player.reports}</h1>
+      <h1>Likes: {this.props.player.likes} Reports: {this.props.player.reports}</h1>
         <div className="passButton" onClick={this.clickPassPhase.bind(this)}>Pass</div>
         
         <div className="player-score">
