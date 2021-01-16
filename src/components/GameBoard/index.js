@@ -2,6 +2,7 @@ import React from "react";
 import GameCardReactions from "../GameCardReactions";
 import GameCardTopics from "../GameCardTopics";
 import GamePlayerBoard from "../GamePlayerBoard";
+import LikeScorer from '../Cards/Scorer/Likes'
 import "./styles.css";
 
 export default function GameBoard({G, ctx, moves, events, playerID}) {
@@ -19,7 +20,24 @@ export default function GameBoard({G, ctx, moves, events, playerID}) {
   }
   console.log(playerID)
 
-
+  let allTopics = G.offer.allTopicsCards.map((card, k)=> (
+    <GameCardTopics 
+      card={card}
+      key={card.id}
+      />
+  ))
+  let allReactions = G.offer.allReactionsCards.map((card, k)=> (
+    <GameCardReactions 
+      card={card}
+      key={card.id}
+      />
+  ))
+  let likeScorer = G.offer.likeScorer.map((card,k)=>(
+    <LikeScorer
+      card={card}
+      key={card.id}
+    />
+  ))
 
   let cards = G.offer.topicsOffer.map((card, k) => (
     <GameCardTopics
@@ -41,20 +59,24 @@ export default function GameBoard({G, ctx, moves, events, playerID}) {
   ));
   return (
     <div className="game-board" style={{position:"relative"}}>
-      <div className="card-offer">
+      {/* <div className="card-offer">
         <h1>Offer:</h1>
         <div className="card-offer-cards">{cards}</div>
       </div>
       <div className="player-boards">
         <h1>Players:</h1>
         <div className="player-areas">{players}</div>
-      </div>
-     {/* <div className="allTopics">
+      </div> */}
+     <div className="allTopics">
         {allTopics}  
      </div> 
      <div className="allReactions">
-        {allReactions}   */}
-     {/* </div>  */}
+        {allReactions}  
+      </div>
+      <div className="likeScorer">
+        {likeScorer}
+      </div>
+   
     </div>
   );
 }

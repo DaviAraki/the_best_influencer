@@ -71,6 +71,7 @@ export default {
         activePlayers:[0,1,2,3],
         allTopicsCards: [].concat(boldMemeTopic.create(2), diyTopic.create(2), dogTopic.create(2), exposeTopic.create(2), hotPic.create(2), movieCriticTopic.create(2), nostalgicTopic.create(2), oddTopic.create(2), politicsTopic.create(2), topic1.create(2), topic2.create(2), topic3.create(2), topic4.create(2), topic5.create(2)),
         allReactionsCards: [].concat(bigExplanation.create(10), boldClaim.create(10), exposed.create(10), goodWill.create(10), lowComent.create(10), netForgives.create(10), netRage.create(10), pushLimits.create(10), redemption.create(10), socialNetwork.create(10), webForgives.create(10), webRage.create(10)),
+        likeScorer: []
     },
     
 };
