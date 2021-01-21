@@ -2,7 +2,6 @@ import React from "react";
 import GameCardReactions from "../GameCardReactions";
 import GameCardTopics from "../GameCardTopics";
 import GamePlayerBoard from "../GamePlayerBoard";
-import LikeScorer from '../Cards/Scorer/Likes'
 import "./styles.css";
 
 export default function GameBoard({G, ctx, moves, events, playerID}) {
@@ -32,13 +31,6 @@ export default function GameBoard({G, ctx, moves, events, playerID}) {
       key={card.id}
       />
   ))
-  let likeScorer = G.offer.likeScorer.map((card,k)=>(
-    <LikeScorer
-      card={card}
-      key={card.id}
-    />
-  ))
-
   let cards = G.offer.topicsOffer.map((card, k) => (
     <GameCardTopics
       card={card}
@@ -73,8 +65,105 @@ export default function GameBoard({G, ctx, moves, events, playerID}) {
      <div className="allReactions">
         {allReactions}  
       </div>
-      <div className="likeScorer">
-        {likeScorer}
+      <div className="like-scorer-container">
+        <div className="like-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+          <div className="qty">8</div>
+          <div className="qty">9</div>
+          <div className="qty">10</div>
+          <div className="qty">11</div>
+          <div className="qty">12</div>
+          <div className="qty">13</div>
+        </div>
+        <div className="like-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+          <div className="qty">8</div>
+          <div className="qty">9</div>
+          <div className="qty">10</div>
+          <div className="qty">11</div>
+          <div className="qty">12</div>
+          <div className="qty">13</div>
+        </div>
+        <div className="like-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+          <div className="qty">8</div>
+          <div className="qty">9</div>
+          <div className="qty">10</div>
+          <div className="qty">11</div>
+          <div className="qty">12</div>
+          <div className="qty">13</div>
+        </div>
+        <div className="like-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+          <div className="qty">8</div>
+          <div className="qty">9</div>
+          <div className="qty">10</div>
+          <div className="qty">11</div>
+          <div className="qty">12</div>
+          <div className="qty">13</div>
+        </div>
+      </div>
+      <div className="report-scorer-container">
+        <div className="report-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+        </div>
+        <div className="report-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+        </div>
+        <div className="report-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+        </div>
+        <div className="report-scorer">
+          <div className="qty">1</div>
+          <div className="qty">2</div>
+          <div className="qty">3</div>
+          <div className="qty">4</div>
+          <div className="qty">5</div>
+          <div className="qty">6</div>
+          <div className="qty">7</div>
+        </div>
       </div>
    
     </div>

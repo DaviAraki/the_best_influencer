@@ -11,7 +11,6 @@
   border: 3mm solid rgb(45, 0, 51);
   background-color: #a43cff;
   border-radius: 3mm;
-  zoom: 0.6;
   position: relative;
 }
 
@@ -33,4 +32,60 @@
     color: hsla(120, 100%, 10%, 100%);
     margin: 0mm 0mm 3mm 0mm;
     
+}
+.like-scorer-container{
+  display: inline-block;
+}
+
+.like-scorer{
+  display: flex;
+  width: 88mm;
+  height: 63.5mm;
+  background-color: #19FF67;
+  border-radius: 10%;
+  border: 0.5mm solid rgba(0, 0, 0, 0.6);
+}
+.like-scorer .qty{
+  font-size: 27px;
+  font-weight: bold;
+  border: 0.5mm solid black;
+  height: 100%;
+  width: 6.7mm;
+  display: flex;
+  align-items: center;
+}
+.report-scorer-container{
+  display: inline-block;
+}
+
+.report-scorer{
+  display: flex;
+  width: 88mm;
+  height: 63.5mm;
+  background-color: #FC0E08;
+  border-radius: 10%;
+  border: 0.5mm solid rgba(0, 0, 0, 0.6);
+}
+.report-scorer .qty{
+  font-size: 40px;
+  font-weight: bold;
+  border: 0.5mm solid black;
+  height: 100%;
+  width: 12.5mm;
+  display: flex;
+  align-items: center;
+}
+@media print{
+  .report-scorer{
+    
+    -webkit-break-inside: avoid;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact; 
+  }
+  .like-scorer{
+
+    -webkit-break-inside: avoid;
+    break-inside: avoid;
+    -webkit-print-color-adjust: exact; 
+  }
 }

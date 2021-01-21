@@ -8,7 +8,7 @@ export default class pushLimits extends basicReaction {
             yellow: { reports: 0, likes: 1 },
             red: { reports: 0, likes: 3 },
             use: 2,
-            textBox:"Target Player: 🟥"
+            textBox:"Target Player: Gets a Red reaction🟥"
         })
     }
 

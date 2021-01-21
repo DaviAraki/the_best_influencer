@@ -110,10 +110,17 @@
     bottom: 1.5mm;
     background-color: red;
   }
-  @media print {
+  @media print  {
     .game-card-reactions {
       -webkit-break-inside: avoid;
       break-inside: avoid;
+      color-adjust: exact;
+      -webkit-print-color-adjust: exact;
+      color: #000!important;
+      font-size: large;
+      border-radius: 3px;
+    }
+    .game-card-reactions .textBox{
       -webkit-print-color-adjust: exact; 
     }
   }
