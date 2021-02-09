@@ -26,7 +26,7 @@ import topic4 from "../components/Cards/Topics/topic4"
 import topic5 from "../components/Cards/Topics/topic5"
 import generateUniqueId from "../utils/generateUniqueId"
 
-export default {
+export default{
 
     players: [
         {

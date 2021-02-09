@@ -1,9 +1,4 @@
-
-import {PlayerView} from 'boardgame.io/core'
 import state from './utils/state';
-import stripSecrets from './utils/strip-secrets'
-
-
 
 export const iTreta = {
     name: "iTreta",  
@@ -20,9 +15,6 @@ export const iTreta = {
             else return{draw : true}
         }
     },
-    // playerView: (G, ctx, playerID) => {
-    //     return stripSecrets(G, playerID);
-    // },
     phases: {
         setupPhase: {
             start: true,
